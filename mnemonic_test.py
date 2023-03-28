@@ -2,10 +2,14 @@
 import json
 import unittest
 import random
+import os
 
 from mnemonic import Mnemonic
 
 class MnemonicTest(unittest.TestCase):
+
+    CURR_DIR = os.path.dirname(__file__)
+
     def _check_list(self, language: str, vectors: list) -> None:
         mnemo = Mnemonic(language)
         for v in vectors:
@@ -18,7 +22,7 @@ class MnemonicTest(unittest.TestCase):
             self.assertEqual(v[2], seed.hex())
 
     def test_vectors(self) -> None:
-        with open("test_vectors.json", "r") as f:
+        with open(os.path.join(self.CURR_DIR, "test_vectors.json"), "r") as f:
             vectors = json.load(f)
         for lang in vectors.keys():
             self._check_list(lang, vectors[lang])
