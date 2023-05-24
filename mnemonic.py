@@ -1,13 +1,16 @@
 import hashlib
 import unicodedata
 import secrets
-
+import os
 
 class Mnemonic(object):
+
+    CURR_DIR = os.path.dirname(__file__)
+
     def __init__(self, language: str = "english"):
         self.language = language
         self.itercount_seed = 2048
-        with open(f"wordlist/{self.language}.txt", "r") as ff:
+        with open(os.path.join(self.CURR_DIR, f"wordlist/{self.language}.txt"), "r") as ff:
             self.words = [w.strip() for w in ff.readlines()]
 
     def _entropy_gen(self, _ent: int = 128):
